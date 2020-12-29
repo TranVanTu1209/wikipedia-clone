@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.1/css/all.css"
+      integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="./style.css" />
+    <title>SearchMe</title>
+  </head>
+  <body>
+    <section class="container">
+      <header class="header">
+        <h1>Search Me A Wikipedia Powered Search Engine</h1>
+        <form id="form" class="form">
+          <input type="text" id="text" placeholder="Type some text..." />
+          <button id="submitBtn" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+          <button id="closeBtn" type="button">
+            <i class="fas fa-times"></i>
+          </button>
+        </form>
+      </header>
+      <main id="main" class="main">
+        <h3>Search Results</h3>
+        <p id="stats">Displaying 11 results</p>
+        <div id="results" class="results">
+          <div class="result-item">
+            <div class="result-item">
+              <a href="">Result title</a>
+            </div>
+            <div class="result-content">
+              <div class="result-image">
+                <!-- https://getuikit.com/v2/docs/images/placeholder_600x400.svg -->
+                <img src="" alt="" />
+              </div>
+              <div class="result-text">
+                <p class="result-description">Desc</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <footer>
+        <p>
+          <span> &lt;&lt; </span> <span>Powered By Wikipedia</span>
+          <span> &gt;&gt; </span>
+        </p>
+      </footer>
+    </section>
+    <script src="./main.js"></script>
+  </body>
+</html>
