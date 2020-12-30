@@ -24,6 +24,7 @@ const getMaxChars = () => {
   if (width < 414) maxChars = 65;
   if (width >= 414 && width < 1400) maxChars = 100;
   if (width >= 1400) maxChars = 130;
+  return maxChars;
 };
 
 const getWikiSearchString = (searchTerm) => {
@@ -31,6 +32,10 @@ const getWikiSearchString = (searchTerm) => {
   const rawSearchString = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${searchTerm}&gsrlimit=20&prop=pageimages|extracts&exchars=${maxChars}&exintro&explaintext&exlimit=max&format=json&origin=*`;
   const searchString = encodeURI(rawSearchString);
   return searchString;
+};
+
+const deleteSearchResults = () => {
+  results.innerHTML = "";
 };
 
 const wikiRequestData = async (searchString) => {
@@ -84,26 +89,25 @@ const showFormButton = (val) => {
   }
 };
 
-const processSearchResults = () => {
-// get search term
-const searchTerm = getSearchTerm();
+const processSearchResults = async () => {
+  // get search term
+  const searchTerm = getSearchTerm();
   if (searchTerm === "") return;
   const resultsArray = await retrieveSearchResults(searchTerm);
-  if(resultsArray.length) {
+  if (resultsArray.length) {
     // build search results
-
+    
     // set stats line
+    stats.innerHTML = `Displaying ${resultsArray.length} results`;
   } else {
-
   }
   console.log(resultsArray);
-
-}
+};
 
 const submitHandler = async (e) => {
   e.preventDefault();
   // delete prev search results
-
+  deleteSearchResults();
   processSearchResults();
 };
 
