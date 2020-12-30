@@ -12,8 +12,49 @@ document.addEventListener("readystatechange", (event) => {
 });
 
 const getSearchTerm = () => {
-  // const rawSearchTerm = 
-}
+  const rawSearchTerm = text.value.trim();
+  const regex = /[ ]{2,}/gi;
+  const searchTerm = rawSearchTerm.replaceAll(regex, " ");
+  return searchTerm;
+};
+
+const getMaxChars = () => {
+  const width = window.innerWidth || window.body.clientWidth;
+  let maxChars;
+  if (width < 414) maxChars = 65;
+  if (width >= 414 && width < 1400) maxChars = 100;
+  if (width >= 1400) maxChars = 130;
+};
+
+const getWikiSearchString = (searchTerm) => {
+  const maxChars = getMaxChars();
+  const rawSearchString = `https://en.wikipedia.org/w/api.php?action=query&generator=search&gsrsearch=${searchTerm}&gsrlimit=20&prop=pageimages|extracts&exchars=${maxChars}&exintro&explaintext&exlimit=max&format=json&origin=*`;
+  const searchString = encodeURI(rawSearchString);
+  return searchString;
+};
+
+const wikiRequestData = async (searchString) => {
+  try {
+    const response = await fetch(searchString);
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.log(error);
+    return [];
+  }
+};
+
+const processWikiResults = (results) => {};
+
+const retrieveSearchResults = async (searchTerm) => {
+  const wikiSearchString = getWikiSearchString(searchTerm);
+  const wikiSearchResults = await wikiRequestData(wikiSearchString);
+  let resultArray = [];
+  if (wikiSearchResults.hasOwnProperty("query")) {
+    resultArray = processWikiResults(wikiSearchResults.query.pages);
+  }
+  return resultArray;
+};
 
 const showFormButton = (val) => {
   if (val) {
@@ -25,8 +66,13 @@ const showFormButton = (val) => {
   }
 };
 
-const submitHandler = (e) => {
+const submitHandler = async (e) => {
   e.preventDefault();
+  // get search term
+  const searchTerm = getSearchTerm();
+  if (searchTerm === "") return;
+  const resultArray = await retrieveSearchResults(searchTerm);
+  console.log(resultArray);
 };
 
 const clearInput = () => {
