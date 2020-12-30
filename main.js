@@ -89,6 +89,30 @@ const showFormButton = (val) => {
   }
 };
 
+const createResultItem = (result) => {
+  resultItem = `
+    <div class="result-item">
+      <div class="result-title">
+        <a href="###"> ${result.title} </a>
+      </div>
+      <div class="result-content">
+        <div class="result-image">
+          <img src=${result.img} alt=${result.title} />
+        </div>
+        <div class="result-text">
+          <p class="result-description"> ${result.text} </p>
+        </div>
+      </div>
+    </div>
+  `;
+  results.insertAdjacentHTML("beforeend", resultItem);
+};
+
+const renderSearchResults = (resultsArray) => {
+  // DONE
+  resultsArray.forEach((result) => createResultItem(result));
+};
+
 const processSearchResults = async () => {
   // get search term
   const searchTerm = getSearchTerm();
@@ -96,12 +120,13 @@ const processSearchResults = async () => {
   const resultsArray = await retrieveSearchResults(searchTerm);
   if (resultsArray.length) {
     // build search results
-    
+    renderSearchResults(resultsArray);
+    console.log(resultsArray);
     // set stats line
     stats.innerHTML = `Displaying ${resultsArray.length} results`;
   } else {
+    stats.innerHTML = "There was no result.";
   }
-  console.log(resultsArray);
 };
 
 const submitHandler = async (e) => {
@@ -119,6 +144,11 @@ const clearInput = () => {
 };
 
 const initApp = () => {
+  window.scrollTo({
+    top: 0,
+    left: 0,
+    behavior: "smooth",
+  });
   form.addEventListener("submit", submitHandler);
   text.addEventListener("input", (e) => {
     showFormButton(e.target.value.trim());
