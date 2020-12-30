@@ -9,7 +9,7 @@ body {
 .container {
   max-width: 600px;
   margin: auto;
-  padding: 15px 0;
+  padding: 15px;
 }
 .header {
   text-align: center;
